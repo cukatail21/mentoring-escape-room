@@ -1,75 +1,75 @@
-import google.generativeai as genai
-genai.configure(api_key="AIzaSyB70CBNL_Bk5cXC4Dto1Q6f_cJ2mSE87g8")
-model=genai.GenerativeModel("gemini-1.5-flash")
+# import google.generativeai as genai
+# genai.configure(api_key="AIzaSyB70CBNL_Bk5cXC4Dto1Q6f_cJ2mSE87g8")
+# model=genai.GenerativeModel("gemini-1.5-flash")
 
 
 
-global rooms
-rooms = [
-    {
-        "name": "Dusty Library",
-        "appearance": "Tall, shadowy bookshelves line the walls, their contents coated in thick dust. A single beam of light filters through a cracked stained glass window, illuminating a worn reading chair and a heavy book left ajar on a pedestal."
-    },
-    {
-        "name": "Abandoned Laboratory",
-        "appearance": "Broken glass litters the floor. Flickering fluorescent lights overhead cast eerie shadows across rusted metal tables, strange chemical stains, and overturned equipment."
-    },
-    {
-        "name": "Secret Vault",
-        "appearance": "The air is cold and still. Massive steel walls close in around a central pedestal. A digital keypad glows faintly beside a locked door with no visible handle."
-    },
-    {
-        "name": "Creepy Nursery",
-        "appearance": "Faded wallpaper peels off in curling strips. A wooden rocking horse sways slightly on its own, and a music box in the corner plays a haunting lullaby. The crib sits empty—but disturbed."
-    },
-    {
-        "name": "Underground Tunnel",
-        "appearance": "The walls are damp stone, covered in moss. A dim lantern swings from a hook above, casting flickering shadows on the branching tunnel paths ahead."
-    },
-    {
-        "name": "Clockwork Room",
-        "appearance": "Giant brass gears slowly turn along the walls, powered by a mechanism in the floor. Levers, dials, and pressure gauges are embedded in the panels. Everything ticks in rhythmic unison."
-    },
-    {
-        "name": "Mirror Hall",
-        "appearance": "Every surface reflects your image—from tall standing mirrors to polished floors and ceilings. Distorted reflections seem to move just a second out of sync with your own."
-    },
+# global rooms
+# rooms = [
+#     {
+#         "name": "Dusty Library",
+#         "appearance": "Tall, shadowy bookshelves line the walls, their contents coated in thick dust. A single beam of light filters through a cracked stained glass window, illuminating a worn reading chair and a heavy book left ajar on a pedestal."
+#     },
+#     {
+#         "name": "Abandoned Laboratory",
+#         "appearance": "Broken glass litters the floor. Flickering fluorescent lights overhead cast eerie shadows across rusted metal tables, strange chemical stains, and overturned equipment."
+#     },
+#     {
+#         "name": "Secret Vault",
+#         "appearance": "The air is cold and still. Massive steel walls close in around a central pedestal. A digital keypad glows faintly beside a locked door with no visible handle."
+#     },
+#     {
+#         "name": "Creepy Nursery",
+#         "appearance": "Faded wallpaper peels off in curling strips. A wooden rocking horse sways slightly on its own, and a music box in the corner plays a haunting lullaby. The crib sits empty—but disturbed."
+#     },
+#     {
+#         "name": "Underground Tunnel",
+#         "appearance": "The walls are damp stone, covered in moss. A dim lantern swings from a hook above, casting flickering shadows on the branching tunnel paths ahead."
+#     },
+#     {
+#         "name": "Clockwork Room",
+#         "appearance": "Giant brass gears slowly turn along the walls, powered by a mechanism in the floor. Levers, dials, and pressure gauges are embedded in the panels. Everything ticks in rhythmic unison."
+#     },
+#     {
+#         "name": "Mirror Hall",
+#         "appearance": "Every surface reflects your image—from tall standing mirrors to polished floors and ceilings. Distorted reflections seem to move just a second out of sync with your own."
+#     },
 
-    {
-        "name": "Observatory",
-        "appearance": "A domed ceiling opens to the stars above. A massive telescope points skyward, surrounded by star charts, planetary models, and cryptic annotations pinned to cork boards."
-    },
-    {
-        "name": "Chapel Ruins",
-        "appearance": "Crumbled stone benches and shattered stained glass litter the floor. A broken altar stands at the far end, its surface carved with ancient, worn inscriptions."
-    }
-]
-
-
-player = "white hair tall big muscles"
-history = []
-current_room = 0
-print(rooms[current_room]["appearance"])
+#     {
+#         "name": "Observatory",
+#         "appearance": "A domed ceiling opens to the stars above. A massive telescope points skyward, surrounded by star charts, planetary models, and cryptic annotations pinned to cork boards."
+#     },
+#     {
+#         "name": "Chapel Ruins",
+#         "appearance": "Crumbled stone benches and shattered stained glass litter the floor. A broken altar stands at the far end, its surface carved with ancient, worn inscriptions."
+#     }
+# ]
 
 
-def Ai(player,inp,room):
-    global current_room
-    global rooms
-    purpose = f'your job is to be like a Dnd doungen master you have to advance them trough the room based on their actions make it just a bit difficult this is his actions {inp} and your answers up until now {history} the player is {player} and the room is {room} if the player should advance to the next room replay with a single word that is passed also replay with passed if the player says 123 you should replay with only one word passed'
-    response= model.generate_content(purpose)
-    if "passed" in response.text:
-        current_room += 1
-        print(rooms[current_room]["appearance"])
-    if response.text != "passed":
-        return response.text
-    history.append(inp)
-    history.append(response)
+# player = "white hair tall big muscles"
+# history = []
+# current_room = 0
+# print(rooms[current_room]["appearance"])
+
+
+# def Ai(player,inp,room):
+#     global current_room
+#     global rooms
+#     purpose = f'your job is to be like a Dnd doungen master you have to advance them trough the room based on their actions make it just a bit difficult this is his actions {inp} and your answers up until now {history} the player is {player} and the room is {room} if the player should advance to the next room replay with a single word that is passed also replay with passed if the player says 123 you should replay with only one word passed'
+#     response= model.generate_content(purpose)
+#     if "passed" in response.text:
+#         current_room += 1
+#         print(rooms[current_room]["appearance"])
+#     if response.text != "passed":
+#         return response.text
+#     history.append(inp)
+#     history.append(response)
     
 
 
-def game():
-    global current_room
-    action = input()
-    print(Ai(player,action,rooms[current_room]))
-while True:
-    game()
+# def game():
+#     global current_room
+#     action = input()
+#     print(Ai(player,action,rooms[current_room]))
+# while True:
+#     game()
