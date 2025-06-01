@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 import History
+import json
 
 load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 TOKEN = os.getenv("GEMINI_TOKEN")
@@ -16,7 +17,6 @@ class Gemini:
     users = []
     content = ""
     game_over = False
-    #model = client.models.get("gemini-2.0-flash")
     
 
     def get_rooms(self):
@@ -24,7 +24,10 @@ class Gemini:
             rooms = f.read()
         return rooms
 
-    
+    def get_rooms_as_json(self):
+        with open("mentoring-escape-room/rooms.json", 'r') as f:
+            rooms = json.load(f)
+        return rooms
     
     def __init__(self):
         # self.users = users
@@ -37,7 +40,6 @@ class Gemini:
 
     
     
-    #TODO: figure out all of the damn arcitecture of this thing
     # this method exists because init can't return a value
     def start(self):
         response = client.models.generate_content(model="gemini-2.0-flash",contents=self.start_string)
@@ -54,7 +56,7 @@ class Gemini:
     
     
     def describe_room(self):
-        return self.rooms[self.current_room]["appearance"]
+        return self.get_rooms_as_json()[self.current_room]["appearance"]
     
 
     # currently not used, logic is in main.py
