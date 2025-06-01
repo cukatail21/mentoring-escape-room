@@ -45,6 +45,9 @@ class Client(discord.Client):
         if "passed" in response:
             gemini.current_room += 1
             await message.channel.send(gemini.describe_room())
+        if gemini.current_room >= len(gemini.rooms):
+            await message.channel.send("Congratulations! You have completed the escape room!")
+            gemini.game_over = True
 
         
         
