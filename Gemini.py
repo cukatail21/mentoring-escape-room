@@ -49,11 +49,18 @@ class Gemini:
 
     def respond_to_message(self,user,content):
         """
-        Responds to a message from a user, history updated outside. PARAMS: user: the user who sent the message, content: the content of the message
+        Responds to a message from a user and updates the history.
+        PARAMS:
+             user: the user who sent the message
+             content: the content of the message
         """
-        response = client.models.generate_content(
+        try:
+            response = client.models.generate_content(
             model="gemini-2.0-flash",contents=f"user with username:\"{user.name}\" sent \"{content}\". answer them. here is you chat history :{history.history_dict}. they are in the room {self.rooms[self.current_room]} "
             )
+        except genai.errors.ServerError as e:
+            return "Sorry, there was an error processing your request. Please try again later."
+        
         history.update_history(content, user.name, False)
         history.update_history(response.text, "bot", True)
         return response.text
@@ -73,7 +80,9 @@ class Gemini:
         return "Game reset. You are back in the first room."
     
     def end_prompt(self):
+        """runs when the game is over"""
         Response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents="The game is over, give the user a congratulatory message and end the game. tell them they can reset the game with the command !reset_game if they wamt to play again."
         )
+        return Response.text

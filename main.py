@@ -59,8 +59,6 @@ class Client(discord.Client):
             gemini.reset_game()
             start = gemini.start()
             await message.channel.send(start)
-
-        
         
 
 # Create the client with specified intents
